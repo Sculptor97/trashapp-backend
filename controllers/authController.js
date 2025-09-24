@@ -24,8 +24,7 @@ export const register = asyncHandler(async (req, res) => {
   // Check if user exists
   const userExists = await User.findOne({ email });
   if (userExists) {
-    res.status(400);
-    throw new Error('User already exists');
+    return res.error('User already exists', 'USER_EXISTS', {}, 400);
   }
 
   // Create user
@@ -66,15 +65,16 @@ export const login = asyncHandler(async (req, res) => {
   // Check for user
   const user = await User.findOne({ email }).select('+password');
   if (!user) {
-    res.status(401);
-    throw new Error('Invalid credentials');
+    return res.unauthorized('Invalid credentials');
   }
 
   // Check if account is locked
   if (user.isLocked) {
-    res.status(423);
-    throw new Error(
-      'Account is temporarily locked due to too many failed login attempts'
+    return res.error(
+      'Account is temporarily locked due to too many failed login attempts',
+      'ACCOUNT_LOCKED',
+      {},
+      423
     );
   }
 
@@ -82,8 +82,7 @@ export const login = asyncHandler(async (req, res) => {
   const isMatch = await user.comparePassword(password);
   if (!isMatch) {
     await user.incLoginAttempts();
-    res.status(401);
-    throw new Error('Invalid credentials');
+    return res.unauthorized('Invalid credentials');
   }
 
   // Reset login attempts on successful login
@@ -140,8 +139,7 @@ export const logout = asyncHandler(async (req, res) => {
 export const getProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.userId);
   if (!user) {
-    res.status(404);
-    throw new Error('User not found');
+    return res.notFound('User');
   }
 
   res.success(
@@ -166,15 +164,13 @@ export const refreshToken = asyncHandler(async (req, res) => {
   const { refresh_token } = req.body;
 
   if (!refresh_token) {
-    res.status(400);
-    throw new Error('Refresh token is required');
+    return res.error('Refresh token is required', 'MISSING_TOKEN', {}, 400);
   }
 
   // Find valid refresh token
   const token = await RefreshToken.findValidToken(refresh_token);
   if (!token) {
-    res.status(401);
-    throw new Error('Invalid or expired refresh token');
+    return res.unauthorized('Invalid or expired refresh token');
   }
 
   // Generate new access token
@@ -200,8 +196,12 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    res.status(400);
-    throw new Error('Invalid or expired verification token');
+    return res.error(
+      'Invalid or expired verification token',
+      'INVALID_TOKEN',
+      {},
+      400
+    );
   }
 
   user.isEmailVerified = true;
@@ -219,8 +219,7 @@ export const resendEmailVerification = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.userId);
 
   if (user.isEmailVerified) {
-    res.status(400);
-    throw new Error('Email is already verified');
+    return res.error('Email is already verified', 'ALREADY_VERIFIED', {}, 400);
   }
 
   const token = user.generateEmailVerificationToken();
@@ -240,8 +239,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
   if (!user) {
-    res.status(404);
-    throw new Error('User not found');
+    return res.notFound('User');
   }
 
   const token = user.generatePasswordResetToken();
@@ -265,8 +263,12 @@ export const confirmPasswordReset = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    res.status(400);
-    throw new Error('Invalid or expired reset token');
+    return res.error(
+      'Invalid or expired reset token',
+      'INVALID_TOKEN',
+      {},
+      400
+    );
   }
 
   user.password = password;
@@ -287,8 +289,12 @@ export const changePassword = asyncHandler(async (req, res) => {
   // Check current password
   const isMatch = await user.comparePassword(current_password);
   if (!isMatch) {
-    res.status(400);
-    throw new Error('Current password is incorrect');
+    return res.error(
+      'Current password is incorrect',
+      'INVALID_PASSWORD',
+      {},
+      400
+    );
   }
 
   user.password = new_password;
@@ -301,30 +307,146 @@ export const changePassword = asyncHandler(async (req, res) => {
 // @route   GET /auth/google/init
 // @access  Public
 export const googleAuthInit = asyncHandler(async (req, res) => {
-  // TODO: Implement Google OAuth initiation
-  res.success({}, 'Google OAuth initiation - to be implemented');
+  // Check if Google OAuth is configured
+  if (
+    !process.env.GOOGLE_CLIENT_ID ||
+    !process.env.GOOGLE_CLIENT_SECRET ||
+    !process.env.GOOGLE_CALLBACK_URL
+  ) {
+    return res.error(
+      'Google OAuth is not configured. Please set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL environment variables.',
+      'OAUTH_NOT_CONFIGURED',
+      {},
+      503
+    );
+  }
+
+  // Generate Google OAuth URL with frontend redirect URI
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  const redirectUri = `${frontendUrl}/auth/google/callback`;
+
+  const authUrl =
+    `https://accounts.google.com/o/oauth2/v2/auth?` +
+    `client_id=${process.env.GOOGLE_CLIENT_ID}&` +
+    `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+    `scope=profile email&` +
+    `response_type=code&` +
+    `access_type=offline&` +
+    `prompt=consent`;
+
+  res.success({ url: authUrl }, 'Google OAuth URL generated');
 });
 
-// @desc    Google OAuth callback
-// @route   GET /auth/google/callback
+// @desc    Exchange Google authorization code for tokens
+// @route   POST /auth/google/exchange
 // @access  Public
-export const googleAuthCallback = asyncHandler(async (req, res) => {
-  // TODO: Implement Google OAuth callback
-  res.success({}, 'Google OAuth callback - to be implemented');
-});
+export const exchangeGoogleCode = asyncHandler(async (req, res) => {
+  // Check if Google OAuth is configured
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    return res.error(
+      'Google OAuth is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables.',
+      'OAUTH_NOT_CONFIGURED',
+      {},
+      503
+    );
+  }
 
-// @desc    Link Google account
-// @route   GET /auth/google/token
-// @access  Private
-export const linkGoogleAccount = asyncHandler(async (req, res) => {
-  // TODO: Implement Google account linking
-  res.success({}, 'Google account linking - to be implemented');
-});
+  const { code } = req.body;
 
-// @desc    Unlink Google account
-// @route   DELETE /auth/google/token
-// @access  Private
-export const unlinkGoogleAccount = asyncHandler(async (req, res) => {
-  // TODO: Implement Google account unlinking
-  res.success({}, 'Google account unlinking - to be implemented');
+  if (!code) {
+    return res.error('Authorization code is required', 'MISSING_CODE', {}, 400);
+  }
+
+  try {
+    // Get frontend URL for redirect URI
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const redirectUri = `${frontendUrl}/auth/google/callback`;
+
+    // Exchange authorization code for tokens
+    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        code,
+        grant_type: 'authorization_code',
+        redirect_uri: redirectUri,
+      }),
+    });
+
+    const tokens = await tokenResponse.json();
+
+    if (tokens.error) {
+      return res.error('Token exchange failed', 'TOKEN_ERROR', tokens, 400);
+    }
+
+    // Get user info from Google
+    const userResponse = await fetch(
+      `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${tokens.access_token}`
+    );
+    const googleUser = await userResponse.json();
+
+    if (googleUser.error) {
+      return res.error(
+        'Failed to fetch user info',
+        'USER_INFO_ERROR',
+        googleUser,
+        400
+      );
+    }
+
+    // Simple logic: Find or create user
+    let user = await User.findOne({ googleId: googleUser.id });
+
+    if (!user) {
+      // Check if user exists with same email
+      const existingUser = await User.findOne({ email: googleUser.email });
+
+      if (existingUser) {
+        // Link Google account to existing user
+        existingUser.googleId = googleUser.id;
+        existingUser.googleEmail = googleUser.email;
+        existingUser.isGoogleLinked = true;
+        await existingUser.save();
+        user = existingUser;
+      } else {
+        // Create new user
+        user = await User.create({
+          googleId: googleUser.id,
+          googleEmail: googleUser.email,
+          isGoogleLinked: true,
+          name: googleUser.name,
+          email: googleUser.email,
+          isEmailVerified: true,
+        });
+      }
+    }
+
+    // Generate tokens
+    const accessToken = generateToken(user._id);
+    const refreshToken = await generateRefreshToken(user._id, {
+      userAgent: req.get('User-Agent'),
+      ip: req.ip,
+    });
+
+    return res.success(
+      {
+        access_token: accessToken,
+        refresh_token: refreshToken.token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      },
+      'Google authentication successful'
+    );
+  } catch (error) {
+    console.error('Google OAuth error:', error);
+    return res.internalError('Google authentication failed');
+  }
 });

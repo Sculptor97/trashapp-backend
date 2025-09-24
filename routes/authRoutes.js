@@ -11,9 +11,7 @@ import {
   confirmPasswordReset,
   changePassword,
   googleAuthInit,
-  googleAuthCallback,
-  linkGoogleAccount,
-  unlinkGoogleAccount,
+  exchangeGoogleCode,
 } from '../controllers/authController.js';
 import protect from '../middleware/authMiddleware.js';
 import { endpoints } from '../config/endpoints.js';
@@ -42,8 +40,6 @@ router.post(endpoints.auth.password.change, protect, changePassword);
 
 // Google OAuth routes
 router.get(endpoints.auth.google.init, googleAuthInit);
-router.get(endpoints.auth.google.callback, googleAuthCallback);
-router.get(endpoints.auth.google.exchange, protect, linkGoogleAccount);
-router.delete(endpoints.auth.google.exchange, protect, unlinkGoogleAccount);
+router.post(endpoints.auth.google.exchange, exchangeGoogleCode);
 
 export default router;

@@ -4,57 +4,57 @@
 export const endpoints = {
   auth: {
     basic: {
-      login: '/auth/login',
-      logout: '/auth/logout',
-      register: '/auth/register',
+      login: '/login/',
+      logout: '/logout/',
+      register: '/register/',
     },
     google: {
-      init: '/auth/google/init',
-      callback: '/auth/google/callback',
-      exchange: '/auth/google/token',
+      init: '/google/init/',
+      callback: '/google/callback/',
+      exchange: '/google/token/',
     },
     email: {
-      verify: '/auth/email/verify',
-      resend: '/auth/email/resend',
-      confirm: '/auth/email/confirm',
+      verify: '/email/verify/',
+      resend: '/email/resend/',
+      confirm: '/email/confirm/',
     },
     password: {
-      change: '/auth/password/change',
-      reset: '/auth/password/reset',
-      confirm: '/auth/password/reset/confirm',
+      change: '/password/change/',
+      reset: '/password/reset/',
+      confirm: '/password/reset/confirm/',
     },
     phone: {
-      verify: '/auth/phone/verify',
-      resend: '/auth/phone/resend',
-      confirm: '/auth/phone/confirm',
+      verify: '/phone/verify/',
+      resend: '/phone/resend/',
+      confirm: '/phone/confirm/',
     },
-    profile: '/auth/profile',
+    profile: '/profile/',
     token: {
-      refresh: '/auth/token/refresh',
-      verify: '/auth/token/verify',
+      refresh: '/token/refresh/',
+      verify: '/token/verify/',
     },
     account: {
-      delete: '/auth/account/delete',
-      confirm: '/auth/account/delete/confirm',
-      request: '/auth/account/delete/request',
+      delete: '/account/delete/',
+      confirm: '/account/delete/confirm/',
+      request: '/account/delete/request/',
     },
   },
 
   admin: {
     pickups: {
-      all: '/admin/pickups',
-      assign: '/admin/pickups/assign',
+      all: '/admin/pickups/',
+      assign: '/admin/pickups/assign/',
       detail: pickupId => `/admin/pickups/${pickupId}`,
     },
     drivers: {
-      all: '/admin/drivers',
+      all: '/admin/drivers/',
       detail: driverId => `/admin/drivers/${driverId}`,
     },
     dashboard: {
-      stats: '/admin/dashboard/stats',
+      stats: '/admin/dashboard/stats/',
     },
     users: {
-      all: '/admin/users',
+      all: '/admin/users/',
     },
   },
 
