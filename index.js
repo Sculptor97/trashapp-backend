@@ -1,9 +1,9 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import passport from './config/passport.js';
 import connectDB from './config/db.js';
-import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import pickupRoutes from './routes/pickupRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
@@ -33,11 +33,6 @@ const corsOptions = {
       'https://localhost:5173',
       'https://localhost:3001',
     ];
-
-    // Add production frontend URL if provided
-    if (process.env.FRONTEND_URL) {
-      allowedOrigins.push(process.env.FRONTEND_URL);
-    }
 
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
@@ -84,7 +79,7 @@ app.use(responseMiddleware);
 
 // API routes using centralized endpoints
 app.use(`${endpoints.api.v1}/auth`, authRoutes);
-app.use(`${endpoints.api.v1}/pickups`, pickupRoutes);
+app.use(`${endpoints.api.v1}/customer`, pickupRoutes);
 app.use(`${endpoints.api.v1}/admin`, adminRoutes);
 
 // Health check endpoint
