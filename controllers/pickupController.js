@@ -274,7 +274,7 @@ export const cancelPickup = asyncHandler(async (req, res) => {
 // @access  Private
 export const uploadPickupPhotos = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  
+
   // Debug logging
   console.log('📸 uploadPickupPhotos - Pickup ID:', id);
   console.log('📸 uploadPickupPhotos - Files received:', req.files);
