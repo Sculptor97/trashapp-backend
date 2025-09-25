@@ -18,9 +18,6 @@ const validateGoogleOAuthConfig = () => {
     console.warn(
       'Google OAuth will not be available until these are configured.'
     );
-    console.warn(`${process.env.GOOGLE_CLIENT_ID}`);
-    console.warn(`${process.env.GOOGLE_CLIENT_SECRET}`);
-    console.warn(`${process.env.GOOGLE_CALLBACK_URL}`);
     return false;
   }
 

@@ -168,11 +168,9 @@ export const getPickups = asyncHandler(async (req, res) => {
   );
 
   res.success(
-    {
-      pickups,
-      pagination,
-    },
-    'Pickups retrieved successfully'
+    pickups,
+    'Pickups retrieved successfully',
+    pagination
   );
 });
 
