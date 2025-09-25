@@ -127,6 +127,10 @@ recurringPickupScheduleSchema.methods.toggleActive = function () {
 recurringPickupScheduleSchema.methods.toJSON = function () {
   const scheduleObject = this.toObject();
 
+  // Convert _id to id for frontend compatibility
+  scheduleObject.id = scheduleObject._id;
+  delete scheduleObject._id;
+
   // Convert coordinates to [longitude, latitude] format for frontend
   if (scheduleObject.coordinates && scheduleObject.coordinates.coordinates) {
     scheduleObject.coordinates = scheduleObject.coordinates.coordinates;

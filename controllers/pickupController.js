@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import mongoose from 'mongoose';
 import Pickup from '../models/Pickup.js';
 import RecurringPickupSchedule from '../models/RecurringPickupSchedule.js';
 import {
@@ -167,11 +168,7 @@ export const getPickups = asyncHandler(async (req, res) => {
     req.pagination.pageSize
   );
 
-  res.success(
-    pickups,
-    'Pickups retrieved successfully',
-    pagination
-  );
+  res.success(pickups, 'Pickups retrieved successfully', pagination);
 });
 
 // @desc    Get pickup by ID
@@ -277,6 +274,11 @@ export const cancelPickup = asyncHandler(async (req, res) => {
 // @access  Private
 export const uploadPickupPhotos = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  
+  // Debug logging
+  console.log('📸 uploadPickupPhotos - Pickup ID:', id);
+  console.log('📸 uploadPickupPhotos - Files received:', req.files);
+  console.log('📸 uploadPickupPhotos - File count:', req.files?.length || 0);
 
   // Check if pickup exists and belongs to user
   const pickup = await Pickup.findOne({
@@ -294,12 +296,16 @@ export const uploadPickupPhotos = asyncHandler(async (req, res) => {
   }
 
   // Extract photo URLs from Cloudinary response
-  const photoUrls = req.files.map(file => file.path);
+  const photoUrls = req.files.map(file => {
+    console.log('📸 File uploaded to Cloudinary:', file.path);
+    return file.path;
+  });
 
   // Update pickup with new photos
   pickup.photos = [...(pickup.photos || []), ...photoUrls];
   await pickup.save();
 
+  console.log('📸 Photos saved to pickup:', photoUrls);
   res.success({ photo_urls: photoUrls }, 'Photos uploaded successfully');
 });
 
@@ -309,9 +315,17 @@ export const uploadPickupPhotos = asyncHandler(async (req, res) => {
 export const getPickupStats = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
 
+  // Debug logging
+  console.log('🔍 getPickupStats - User ID:', userId);
+  console.log('🔍 getPickupStats - User ID type:', typeof userId);
+
+  // Check if user has any pickups at all
+  const totalPickups = await Pickup.countDocuments({ user: userId });
+  console.log('🔍 getPickupStats - Total pickups for user:', totalPickups);
+
   // Get pickup statistics
   const stats = await Pickup.aggregate([
-    { $match: { user: userId } },
+    { $match: { user: new mongoose.Types.ObjectId(userId) } },
     {
       $group: {
         _id: null,
@@ -335,6 +349,8 @@ export const getPickupStats = asyncHandler(async (req, res) => {
     },
   ]);
 
+  console.log('🔍 getPickupStats - Aggregation result:', stats);
+
   const result = stats[0] || {
     total_requests: 0,
     pending_requests: 0,
@@ -346,7 +362,48 @@ export const getPickupStats = asyncHandler(async (req, res) => {
     average_rating: 0,
   };
 
-  res.success(result, 'Pickup statistics retrieved successfully');
+  // Add thisMonth calculation for frontend compatibility
+  const thisMonth = new Date();
+  const startOfMonth = new Date(
+    thisMonth.getFullYear(),
+    thisMonth.getMonth(),
+    1
+  );
+
+  const thisMonthStats = await Pickup.aggregate([
+    {
+      $match: {
+        user: new mongoose.Types.ObjectId(userId),
+        createdAt: { $gte: startOfMonth },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        this_month_completed: {
+          $sum: { $cond: [{ $eq: ['$status', 'completed'] }, 1, 0] },
+        },
+      },
+    },
+  ]);
+
+  const thisMonthResult = thisMonthStats[0] || { this_month_completed: 0 };
+
+  // Return stats in the format expected by frontend
+  const frontendStats = {
+    total_requests: result.total_requests,
+    pending_requests: result.pending_requests,
+    scheduled_requests: result.scheduled_requests,
+    completed_requests: result.completed_requests,
+    thisMonth: thisMonthResult.this_month_completed,
+    // Additional stats for admin use
+    cancelled_requests: result.cancelled_requests,
+    total_weight_collected: result.total_weight_collected,
+    total_cost_saved: result.total_cost_saved,
+    average_rating: result.average_rating,
+  };
+
+  res.success(frontendStats, 'Pickup statistics retrieved successfully');
 });
 
 // @desc    Get pickup tracking

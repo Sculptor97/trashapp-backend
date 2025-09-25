@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
@@ -13,8 +12,6 @@ import {
   errorHandler,
   notFoundHandler,
 } from './middleware/responseMiddleware.js';
-
-dotenv.config();
 
 connectDB();
 

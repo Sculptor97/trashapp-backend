@@ -214,6 +214,10 @@ pickupSchema.pre('save', function (next) {
 pickupSchema.methods.toJSON = function () {
   const pickupObject = this.toObject();
 
+  // Convert _id to id for frontend compatibility
+  pickupObject.id = pickupObject._id;
+  delete pickupObject._id;
+
   // Convert coordinates to [longitude, latitude] format for frontend
   if (pickupObject.coordinates && pickupObject.coordinates.coordinates) {
     pickupObject.coordinates = pickupObject.coordinates.coordinates;

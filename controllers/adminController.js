@@ -76,11 +76,7 @@ export const getAdminPickups = asyncHandler(async (req, res) => {
     req.pagination.pageSize
   );
 
-  res.success(
-    pickups,
-    'Admin pickups list retrieved successfully',
-    pagination
-  );
+  res.success(pickups, 'Admin pickups list retrieved successfully', pagination);
 });
 
 // @desc    Get all drivers for admin
@@ -116,11 +112,7 @@ export const getAdminDrivers = asyncHandler(async (req, res) => {
     req.pagination.pageSize
   );
 
-  res.success(
-    drivers,
-    'Admin drivers list retrieved successfully',
-    pagination
-  );
+  res.success(drivers, 'Admin drivers list retrieved successfully', pagination);
 });
 
 // @desc    Get all users for admin
@@ -156,9 +148,5 @@ export const getAdminUsers = asyncHandler(async (req, res) => {
     req.pagination.pageSize
   );
 
-  res.success(
-    users,
-    'Admin users list retrieved successfully',
-    pagination
-  );
+  res.success(users, 'Admin users list retrieved successfully', pagination);
 });

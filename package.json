@@ -7,8 +7,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node --env-file=.env index.js",
+    "dev": "nodemon --env-file=.env index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -23,7 +23,6 @@
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
-    "dotenv": "^16.3.2",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-session": "^1.18.2",
