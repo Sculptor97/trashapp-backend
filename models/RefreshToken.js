@@ -36,9 +36,9 @@ const refreshTokenSchema = new mongoose.Schema(
 );
 
 // Index for better performance
-refreshTokenSchema.index({ token: 1 });
+// Note: token already has a unique index from schema definition
 refreshTokenSchema.index({ user: 1 });
-refreshTokenSchema.index({ expiresAt: 1 });
+// Note: expiresAt already has a TTL index defined in the schema field
 
 // Static method to create refresh token
 refreshTokenSchema.statics.createToken = function (userId, deviceInfo = {}) {

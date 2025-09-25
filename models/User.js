@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // Index for better performance
-userSchema.index({ email: 1 });
+// Note: email already has a unique index from schema definition
 userSchema.index({ googleId: 1 });
 userSchema.index({ emailVerificationToken: 1 });
 userSchema.index({ passwordResetToken: 1 });

@@ -145,6 +145,19 @@ export const createPagination = (currentPage, count, pageSize) => {
 };
 
 /**
+ * Create paginated response data
+ * @param {Array} items - Array of items
+ * @param {Object} pagination - Pagination metadata
+ * @returns {Object} Paginated response data
+ */
+export const createPaginatedData = (items, pagination) => {
+  return {
+    items,
+    pagination,
+  };
+};
+
+/**
  * Standard HTTP status codes
  */
 export const HTTP_STATUS = {

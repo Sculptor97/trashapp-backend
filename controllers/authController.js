@@ -322,7 +322,7 @@ export const googleAuthInit = asyncHandler(async (req, res) => {
   }
 
   // Generate Google OAuth URL with frontend redirect URI
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
   const redirectUri = `${frontendUrl}/auth/google/callback`;
 
   const authUrl =
