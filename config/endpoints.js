@@ -79,6 +79,32 @@ export const endpoints = {
     },
   },
 
+  portfolio: {
+    get: '/portfolio',
+    projects: {
+      get: '/projects',
+      getById: '/projects/:id',
+    },
+    skills: {
+      get: '/skills',
+    },
+    services: {
+      get: '/services',
+    },
+    intro: {
+      get: '/intro',
+    },
+    contact: {
+      get: '/contact',
+    },
+    social: {
+      get: '/social',
+    },
+    logotext: {
+      get: '/logotext',
+    },
+  },
+
   // API versioning
   api: {
     v1: '/api/v1',

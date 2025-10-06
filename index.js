@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import pickupRoutes from './routes/pickupRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import portfolioRoutes from './routes/portfolioRoutes.js';
 import { endpoints } from './config/endpoints.js';
 import {
   responseMiddleware,
@@ -78,7 +79,7 @@ app.use(responseMiddleware);
 app.use(`${endpoints.api.v1}/auth`, authRoutes);
 app.use(`${endpoints.api.v1}/customer`, pickupRoutes);
 app.use(`${endpoints.api.v1}/admin`, adminRoutes);
-
+app.use(`${endpoints.api.v1}/portfolio`, portfolioRoutes);
 // Health check endpoint
 app.get(endpoints.health, (req, res) => {
   res.success(
