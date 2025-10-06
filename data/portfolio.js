@@ -1,12 +1,12 @@
-const logotext = 'LEGHA-GHA KANG';
+const logotext = 'Legha-gha Kang';
 const meta = {
-  title: 'LEGHA-GHA KANG',
+  title: 'Legha-gha Kang',
   description:
-    'I’m LEGHA-GHA KANG a Full stack devloper, currently working in Yaounde',
+    'I’m Legha-gha Kang a Full stack devloper, currently working in Yaounde',
 };
 
 const introdata = {
-  title: 'I’m LEGHA-GHA KANG',
+  title: 'I’m Legha-gha Kang',
   animated: {
     first: 'I love coding',
     second: 'I code cool websites',
