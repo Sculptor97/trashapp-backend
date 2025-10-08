@@ -29,7 +29,7 @@ const corsOptions = {
       'http://localhost:5173',
       'http://localhost:3001',
       'https://localhost:5173',
-      'https://xp-portfolio-livid.vercel.app'
+      'https://xp-portfolio-livid.vercel.app',
       'https://localhost:3001',
     ];
 
