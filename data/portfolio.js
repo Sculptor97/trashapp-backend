@@ -18,7 +18,7 @@ const introdata = {
 };
 
 const dataabout = {
-  title: 'abit about my self',
+  title: 'About Me',
   aboutme:
     'I am a highly motivated Full Stack Web Developer with a degree in Software Engineering (2022). My experience spans both backend and frontend development, equipping me with a comprehensive skill set to create dynamic, responsive, andefficient web applications. With a strong background in teaching web developmentand programming, coupled with hands-on experience in building production-levelapplications, I am passionate about delivering seamless user experiences and designing scalable architectures. I am eager to leverage my full stack skills in a challenging development role that allows me to contribute effectively to innovativeprojects.',
 };
