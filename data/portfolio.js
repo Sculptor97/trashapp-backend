@@ -127,7 +127,7 @@ const services = [
 
 const dataportfolio = [
   {
-    id: 'ecocollect-waste-management',
+    id: '001',
     title: 'EcoCollect - Waste Management Platform',
     img: 'https://images.unsplash.com/photo-1503596476-1c12a8ba09a9?q=80&w=400&h=400&auto=format&fit=crop',
     description:
@@ -171,7 +171,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: 'eld-log-route-planner',
+    id: '002',
     title: 'ELD Log Route Planning System',
     img: 'https://images.unsplash.com/photo-1711942179703-fce59b6afac6?q=80&w=400&h=700&auto=format&fit=crop',
     description:
@@ -213,7 +213,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: 'sentiment-analysis-extension',
+    id: '003',
     title: 'Sentiment Analysis Chrome Extension',
     img: 'https://images.unsplash.com/photo-1584735414166-8c436d5854ac?q=80&w=400&h=500&auto=format&fit=crop',
     description:
@@ -250,7 +250,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: 'whatsapp-automation-platform',
+    id: '004',
     title: 'WhatsApp Messaging Automation Platform',
     img: 'https://images.unsplash.com/photo-1599382103240-5f2a57137d28?q=80&w=400&h=700&auto=format&fit=crop',
     description:
@@ -290,7 +290,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: 'alien-shooting-game',
+    id: '005',
     title: 'Alien Shooting Game',
     img: 'https://images.unsplash.com/photo-1572224104820-98a5279d861b?q=80&w=400&h=600&auto=format&fit=crop',
     description:
@@ -318,7 +318,7 @@ const dataportfolio = [
     gallery: ['/images/alien_invasion.jpg'],
   },
   {
-    id: 'fantasy-premier-league-refactor',
+    id: '006',
     title: 'Fantasy Premier League Insights Refactor',
     img: 'https://images.unsplash.com/photo-1568101794887-a7a3f149f6e6?q=80&w=400&h=500&auto=format&fit=crop',
     description:
@@ -356,7 +356,7 @@ const dataportfolio = [
   },
 
   {
-    id: 'agency-portfolio',
+    id: '007',
     title: 'Agency Portfolio Website',
     img: 'https://images.unsplash.com/photo-1702479744062-1880502275b1?q=80&w=400&h=550&auto=format&fit=crop',
     description:
@@ -384,7 +384,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: 'real-estate-showcase',
+    id: '008',
     title: 'Real Estate Product Showcase',
     img: 'https://images.unsplash.com/photo-1708196889869-1405f43976ea?q=80&w=400&h=600&auto=format&fit=crop',
     description:
@@ -416,7 +416,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: 'real-estate-review-dashboard',
+    id: '009',
     title: 'Real Estate Review Management Dashboard',
     img: 'https://images.unsplash.com/photo-1740484409661-75d41ff41a9b?q=80&w=400&h=700&auto=format&fit=crop',
     description:
@@ -453,7 +453,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: 'afroconnect-platform',
+    id: '010',
     title: 'Afroconnect - African Business Marketplace',
     img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400&h=650&auto=format&fit=crop',
     description:
@@ -498,7 +498,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: 'boardroomos-ai-chat',
+    id: '011',
     title: 'BoardroomOS - AI Full Stack Chat Application',
     img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=400&h=600&auto=format&fit=crop',
     description:
