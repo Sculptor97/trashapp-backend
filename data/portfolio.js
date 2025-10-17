@@ -127,7 +127,7 @@ const services = [
 
 const dataportfolio = [
   {
-    id: '001',
+    id: 'ecocollect',
     title: 'EcoCollect - Waste Management Platform',
     img: 'https://images.unsplash.com/photo-1503596476-1c12a8ba09a9?q=80&w=400&h=400&auto=format&fit=crop',
     description:
@@ -171,7 +171,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: '002',
+    id: 'eld-log',
     title: 'ELD Log Route Planning System',
     img: 'https://images.unsplash.com/photo-1711942179703-fce59b6afac6?q=80&w=400&h=700&auto=format&fit=crop',
     description:
@@ -213,7 +213,48 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: '003',
+    id: 'xp-portfolio',
+    title: 'XP Portfolio',
+    img: 'https://images.unsplash.com/photo-1624644128945-920c0da6931b?auto=format&fit=crop&q=80&w=500&h=400',
+    description:
+      'A nostalgic Windows XP-themed portfolio website that recreates the classic desktop experience with modern web technologies. Features an authentic XP interface with draggable windows, start menu, taskbar, and desktop applications including a file explorer, command prompt, and project showcase.',
+    shortDescription:
+      'Windows XP-themed portfolio website with authentic desktop experience',
+    technologies: [
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'GSAP',
+      'React Query',
+      'React Router',
+      'React95',
+      'XP.css',
+    ],
+    challenge:
+      'Creating an authentic Windows XP desktop experience in a web browser while maintaining modern performance and accessibility standards. The challenge involved recreating complex UI interactions like draggable windows, start menu animations, and the classic Luna theme styling.',
+    solution:
+      'Built a component-based architecture using React with TypeScript for type safety. Implemented GSAP for smooth animations, Radix UI for accessible components, and custom CSS with XP.css for authentic styling. Used React Query for efficient data management and created reusable window components that mimic the original XP interface.',
+    features: [
+      'Authentic Windows XP desktop interface with Luna theme',
+      'Draggable and resizable windows with minimize/maximize functionality',
+      'Interactive start menu with application shortcuts',
+      'File explorer with project showcase and image galleries',
+      'Command prompt terminal with custom commands',
+      'Responsive design that works on desktop and mobile',
+      'Dark mode support with proper theme switching',
+      'Smooth animations and transitions using GSAP',
+      'Modern React patterns with hooks and context',
+      'TypeScript for type safety and better development experience',
+    ],
+    deployedLink: 'https://xp-portfolio-livid.vercel.app/',
+    githubLink: 'https://github.com/Sculptor97/xp-portfolio',
+    isDeployed: true,
+    isPublicRepo: true,
+    created: '2025-10-17',
+    gallery: [],
+  },
+  {
+    id: 'browsebright',
     title: 'Sentiment Analysis Chrome Extension',
     img: 'https://images.unsplash.com/photo-1584735414166-8c436d5854ac?q=80&w=400&h=500&auto=format&fit=crop',
     description:
@@ -250,7 +291,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: '004',
+    id: 'verbotic',
     title: 'WhatsApp Messaging Automation Platform',
     img: 'https://images.unsplash.com/photo-1599382103240-5f2a57137d28?q=80&w=400&h=700&auto=format&fit=crop',
     description:
@@ -290,7 +331,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: '005',
+    id: 'alien-invasion',
     title: 'Alien Shooting Game',
     img: 'https://images.unsplash.com/photo-1572224104820-98a5279d861b?q=80&w=400&h=600&auto=format&fit=crop',
     description:
@@ -318,7 +359,7 @@ const dataportfolio = [
     gallery: ['/images/alien_invasion.jpg'],
   },
   {
-    id: '006',
+    id: 'fpl-insights',
     title: 'Fantasy Premier League Insights Refactor',
     img: 'https://images.unsplash.com/photo-1568101794887-a7a3f149f6e6?q=80&w=400&h=500&auto=format&fit=crop',
     description:
@@ -356,7 +397,7 @@ const dataportfolio = [
   },
 
   {
-    id: '007',
+    id: 'nkeumosoft-portfolio',
     title: 'Agency Portfolio Website',
     img: 'https://images.unsplash.com/photo-1702479744062-1880502275b1?q=80&w=400&h=550&auto=format&fit=crop',
     description:
@@ -384,7 +425,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: '008',
+    id: 'real-estate-showcase',
     title: 'Real Estate Product Showcase',
     img: 'https://images.unsplash.com/photo-1708196889869-1405f43976ea?q=80&w=400&h=600&auto=format&fit=crop',
     description:
@@ -416,7 +457,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: '009',
+    id: 'flex-reviews',
     title: 'Real Estate Review Management Dashboard',
     img: 'https://images.unsplash.com/photo-1740484409661-75d41ff41a9b?q=80&w=400&h=700&auto=format&fit=crop',
     description:
@@ -453,7 +494,7 @@ const dataportfolio = [
     gallery: [],
   },
   {
-    id: '010',
+    id: 'afroconnect',
     title: 'Afroconnect - African Business Marketplace',
     img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400&h=650&auto=format&fit=crop',
     description:
@@ -498,7 +539,7 @@ const dataportfolio = [
     ],
   },
   {
-    id: '011',
+    id: 'boardroom-os',
     title: 'BoardroomOS - AI Full Stack Chat Application',
     img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=400&h=600&auto=format&fit=crop',
     description:
